@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Dev-Cpp\MinGW64\bin\g++.exe" -Wall -fexceptions -static -static-libgcc -static-libstdc++ -g -static-libgcc -static-libstdc++ -std=c++11 main.cpp -o main.exe

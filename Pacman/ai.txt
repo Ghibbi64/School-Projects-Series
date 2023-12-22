@@ -1,0 +1,92 @@
+PRIMA ITERAZIONE DELLA STUPIDA AI DEI FANTASMI, aveva diversi problemi
+    switch(framecount)
+    {
+        case 2: updateEnemies(5,10,5,12,5,14); break;
+        case 4: updateEnemies(5,11,5,12,5,13); break;
+        case 6: updateEnemies(4,11,4,12,4,13); break;
+        case 8: updateEnemies(3,11,3,12,3,13); break;
+        case 10: updateEnemies(2,11,2,12,2,13); break;
+        case 12: updateEnemies(1,11,1,12,1,13); break;
+        case 14: updateEnemies(1,10,1,12,1,14); break;
+        case 16:
+            updateEnemies(1,9,1,12,1,15);
+            background[2][11]='-'; 
+            background[2][12]='-'; 
+            background[2][13]='-';
+            break;
+    }
+
+    for(int n=0; n<3; n++)
+    {
+        if(framecount>16)
+        {
+            //1 up, 2 right, 3 down, 4 left
+
+            int direction[4], temp1[4]; //contiene le 4 direzioni dove il nemico può andare in ordine preferenziale
+
+            //calcola la distanza dal player da ogni direzione
+                temp1[0]=nemici[n][0]-player[0];
+                temp1[1]=nemici[n][0]+player[0];
+                temp1[2]=nemici[n][1]-player[1];
+                temp1[3]=nemici[n][1]-player[1];
+
+            //determina la direzione di ogni distanza
+            if(temp1[0]>0) 
+            {
+                direction[0]=1;
+                direction[1]=3;
+            }
+            else
+            {
+                direction[0]=3;
+                direction[1]=1;
+            }
+            if(temp1[2]>0)
+            {
+                direction[0]=4;
+                direction[1]=2;
+            }
+            else
+            {
+                direction[0]=2;
+                direction[1]=4;
+            }
+
+            for(int i=0; i<3; i++)
+                for(int j=0; j<4; j++)
+                    if(temp1[i]>temp1[j])
+                    {
+                        int scambio, scambio2;
+                        scambio=temp1[j];
+                        scambio2=direction[j];
+                        temp1[i]=temp1[j];
+                        direction[i]=direction[j];
+                        temp1[j]=scambio;
+                        direction[j]=scambio2;
+                    }
+
+            for(int i=0; i<4; i++)
+                switch(direction[i])
+                {
+                    case 1:
+                        if(background[nemici[n][0]-1][nemici[n][1]]!='-' && background[nemici[n][0]-1][nemici[n][1]]!='|' && background[nemici[n][0]-1][nemici[n][1]]!='+' && background[nemici[n][0]-1][nemici[n][1]]!='M')
+                            nemici[n][0]--;
+                        break;
+
+                    case 2:
+                        if(background[nemici[n][0]][nemici[n][1]+1]=='-' && background[nemici[n][0]][nemici[n][1]+1]=='|' && background[nemici[n][0]][nemici[n][1]+1]=='+' && background[nemici[n][0]][nemici[n][1]+1]=='M')
+                            nemici[n][1]++;
+                        break;
+
+                    case 3:
+                        if(background[nemici[n][0]+1][nemici[n][1]]=='-' && background[nemici[n][0]+1][nemici[n][1]]=='|' && background[nemici[n][0]+1][nemici[n][1]]=='+' && background[nemici[n][0]+1][nemici[n][1]]=='M')
+                            nemici[n][0]++;
+                        break;
+                    
+                    case 4: 
+                        if(background[nemici[n][0]][nemici[n][1]-1]=='-' && background[nemici[n][0]][nemici[n][1]-1]=='|' && background[nemici[n][0]][nemici[n][1]-1]=='+' && background[nemici[n][0]][nemici[n][1]-1]=='M')
+                            nemici[n][1]--;
+                        break;
+                }
+        }
+    }
